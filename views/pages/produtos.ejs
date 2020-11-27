@@ -1,0 +1,144 @@
+<%- include('../partial/head.ejs') %>
+    <%- include('../partial/nav.ejs') %>
+        <%- include('../partial/aside.ejs') %>
+            <div class="container">
+                <h1><i class="fas fa-gifts" aria-hidden="true"></i> Pordutos</h1>
+
+                <div class="form-group busca-produtos">
+                    <div class="btn-add-produto"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#produto-add"><i class='fas fa-plus' style='font-size:24px'></i></button></div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class='fas fa-search' style='font-size:24px'></i></span>
+                        </div>
+                        <input id="busca" type="text" name="usuario" class="form-control" placeholder="Pesquisa de Produto" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+
+                <div class="tabela-teste">
+                    <table id="table-produto">
+                        <thead>
+                            <tr>
+                                <th class="col-id" scope="col">Codigo</th>
+                                <th class="col-desc" scope="col">Descrição</th>
+                                <th class="col-cat" scope="col">Categoria</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="lista" class="">
+                            <% produtos.map(p =>{%>
+                                <tr>
+                                    <th class="id col-id" scope="row">
+                                        <a href="/produtos/<%= p.id %>">
+                                            <%= p.id %>
+                                        </a>
+                                    </th>
+                                    <td class="desc col-desc" scope="row">
+                                        <a href="/produtos/<%= p.id %>">
+                                            <%= p.descricao %>
+                                        </a>
+                                    </td>
+                                    <td class="nome col-cat">
+                                        <a href="/produtos/<%= p.id %>">
+                                            <%= p.nome %>
+                                        </a>
+                                    </td>
+
+                                </tr>
+                                <%   }) %>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <script>
+                function linhas(tableBody, arr) {
+                    let tr = ''
+                    arr.map(linha => {
+                        tr += `<tr>
+                            <th class="id col-id" scope="row">
+                                        <a href="/produtos/${linha.id}">
+                                            ${linha.id}
+                                        </a>
+                                    </th>
+                                    <td class="desc col-desc" scope="row">
+                                        <a href="/produtos/${linha.id}">
+                                            ${linha.descricao}
+                                        </a>
+                                    </td>
+                                    <td class="nome col-cat">
+                                        <a href="/produtos/${linha.id}">
+                                            ${linha.nome}
+                                        </a>
+                                    </td>
+                                </tr>
+                     
+                     `
+                    })
+                    return tableBody.innerHTML = tr
+                }
+                const lista = document.getElementById('lista')
+                let busca = document.getElementById('busca')
+                let atualizarProdutoId = document.getElementById('atualizar-produto-id')
+                let deleteProdutoId = document.getElementById('delete-produto-id')
+                let atualizarProdutoDesc = document.getElementById('atualizar-produto-desc')
+                let deleteProdutoDesc = document.getElementById('produto-desc-delete')
+                let atualizarProdutoCategoria = document.getElementById('atualizar-produto-categoria')
+
+                // let atualizarDesc = document.getElementsByClassName('atualizar-desc')
+                let btnAtualizar = document.getElementsByClassName('atualizar')
+                let btnDeletar = document.getElementsByClassName('delete')
+                let idProduto = document.getElementsByClassName('id')
+                let idCategoria = document.getElementsByClassName('cat_id')
+                let descProduto = document.getElementsByClassName('desc')
+                let nomeProduto = document.getElementsByClassName('nome')
+
+
+                busca.addEventListener('keyup', async e => {
+                    const resposta = await fetch(`<%=link.url%>/produtos?p.descricao=${busca.value}`, {
+                        method: "GET",
+                        //  body: JSON.stringify(req.body),
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + '<%=link.token%>'
+                        }
+                    })
+                    const produtos = await resposta.json()
+                    linhas(lista, produtos)
+
+                })
+                for (let i = 0; i < btnDeletar.length; i++) {
+                    btnDeletar[i].addEventListener('click', e => {
+                        deleteProdutoId.value = idProduto[i].textContent.trim()
+                        deleteProdutoDesc.innerHTML = descProduto[i].textContent.trim()
+                    });
+
+                }
+                for (let index = 0; index < btnAtualizar.length; index++) {
+                    btnAtualizar[index].addEventListener('click', e => {
+                        const lista = document.getElementById('lista')
+                        let busca = document.getElementById('busca')
+                        let atualizarProdutoId = document.getElementById('atualizar-produto-id')
+                        let deleteProdutoId = document.getElementById('delete-produto-id')
+                        let atualizarProdutoDesc = document.getElementById('atualizar-produto-desc')
+                        let deleteProdutoDesc = document.getElementById('produto-desc-delete')
+                        let atualizarProdutoCategoria = document.getElementById('atualizar-produto-categoria')
+
+                        // let atualizarDesc = document.getElementsByClassName('atualizar-desc')
+                        let btnAtualizar = document.getElementsByClassName('atualizar')
+                        let btnDeletar = document.getElementsByClassName('delete')
+                        let idProduto = document.getElementsByClassName('id')
+                        let idCategoria = document.getElementsByClassName('cat_id')
+                        let descProduto = document.getElementsByClassName('desc')
+                        let nomeProduto = document.getElementsByClassName('nome')
+                        atualizarProdutoId.value = idProduto[index].textContent.trim()
+                        atualizarProdutoDesc.value = descProduto[index].textContent.trim()
+                        atualizarProdutoCategoria.value = idCategoria[index].value
+                    })
+
+                }
+            </script>
+            <%- include('../partial/modal/product.ejs') %>
+                <%- include('../partial/footer.ejs') %>

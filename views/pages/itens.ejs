@@ -1,0 +1,101 @@
+<%- include('../partial/head.ejs') %>
+    <%- include('../partial/nav.ejs') %>
+        <%- include('../partial/aside.ejs') %>
+            <div class="container">
+                <h1><i class="fas fa-cart-arrow-down" aria-hidden="true"></i> Itens</h1>
+                <ul class="list-group list-group-flush lista-itens ">
+                    <% listas   .map(p =>{%>
+                        <li class="list-group-item lista-compra-row">
+                            <div>
+                                <div>
+                                    <span class="badge badge-primary"><%=p.nome%></span>
+
+                                </div>
+                                <div>
+                                    <h5>
+                                        <%=p.descricao%>
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="div-forms">
+                                <form class="form-lista-compra" action="/compras" method="POST">
+                                    <div>
+                                        <div>
+                                            <span class="badge badge-primary">Quantidade</span>
+                                        </div>
+                                        <input class="form-control input-id" type="hidden" name="id" id="" value="<%= p.id %> ">
+                                        <input class="form-control input-id" type="hidden" name="lista_id" id="" value="<%=p.lista_id%> ">
+                                        <input class="form-control input-quantidade" type="number" name="quantidade" value="<%=p.quantidade%>" step="0.010" <%=p.status==1 ? 'disabled': ''%>>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <span class="badge badge-primary">R$ Unitario</span>
+                                        </div>
+                                        <input class="form-control input-valor-un" type="number" name="valor_un" value="<%=p.valor_un.toFixed(2)%>" id="input-valor-un" step="0.010" <%=p.status==1 ? 'disabled': ''%> >
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <span class="badge badge-primary">R$ Total</span>
+                                        </div>
+                                        <input class="form-control input-valor" type="number" name="valor" value="<%=p.valor.toFixed(2)%>" id="input-valor" step="0.010" disabled>
+                                    </div>
+                                    <input class="form-control input-status" type="hidden" name="status" id="" value="<%= p.status %>">
+                                    <div><button type="submit" class="btn btn-success add-list"><i class='fas fa-cart-arrow-down icon-bnt'></i></button></div>
+                                </form>
+                            </div>
+                        </li>
+                        <% }) %>
+                </ul>
+                <script>
+                    // fas fa-times-circle
+                    const total = document.getElementsByClassName('input-valor')
+                    const valorUn = document.getElementsByClassName('input-valor-un')
+                    const quantidade = document.getElementsByClassName('input-quantidade')
+                    const status = document.getElementsByClassName('input-status')
+                    const btnAdd = document.getElementsByClassName('add-list')
+                    const li = document.getElementsByClassName('lista-compra-row')
+                    const icon = document.getElementsByClassName('icon-bnt')
+                    for (let index = 0; index < valorUn.length; index++) {
+                        valorUn[index].addEventListener('change', e => {
+
+                            total[index].value = Number(quantidade[index].value * valorUn[index].value).toFixed(2)
+
+                            console.log(status[index].value)
+                        })
+                        quantidade[index].addEventListener('change', e => {
+                            total[index].value = quantidade[index].value * valorUn[index].value
+                            console.log(status[index].value)
+                        })
+
+                        if (status[index].value == 1) {
+                            li[index].className = 'list-group-item lista-compra-row iten-sale'
+                            btnAdd[index].className = 'btn btn-danger add-list'
+                            icon[index].className = 'fas fa-times-circle icon-bnt'
+
+                        } else {
+                            li[index].className = 'list-group-item lista-compra-row'
+                            btnAdd[index].className = 'btn btn-success add-list'
+                            icon[index].className = 'fas fa-cart-arrow-down icon-bnt'
+                            btnAdd[index].addEventListener('click', e => {
+                                if (quantidade[index].value == 0) {
+                                    e.preventDefault()
+                                    quantidade[index].style.border = '2px solid red'
+                                    valorUn[index].style.border = '1px solid #207ce5'
+                                    alert('Valor não pode ser zero!')
+                                } else if (valorUn[index].value == 0) {
+                                    e.preventDefault()
+                                    quantidade[index].style.border = '1px solid #207ce5'
+                                    valorUn[index].style.border = '2px solid red'
+                                    alert('Valor não pode ser zero!')
+                                }
+                            })
+
+                        }
+
+
+
+
+
+                    }
+                </script>
+                <%- include('../partial/footer.ejs') %>

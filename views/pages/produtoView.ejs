@@ -1,0 +1,94 @@
+<%- include('../partial/head.ejs') %>
+    <%- include('../partial/nav.ejs') %>
+        <%- include('../partial/aside.ejs') %>
+            <div class="container">
+                <h1><i class="fas fa-gifts" aria-hidden="true"></i> Porduto</h1>
+                <div class="card-produto">
+                    <div class="info-produto">
+                        <h4><i class="fas fa-barcode" aria-hidden="true"></i> -
+                            <%=produto[0].id%>
+                        </h4>
+                        <h4><i class="fas fa-gifts" aria-hidden="true"></i> -
+                            <%=produto[0].descricao%>
+                        </h4>
+                        <h4><i class="fas fa-tags" aria-hidden="true"></i> -
+                            <%=produto[0].nome%>
+                        </h4>
+                    </div>
+                    <div class="btn-acao">
+                        <input class="cat_id" type="hidden" value="<%= produto[0].categoria_id %>">
+                        <div class="btn-edit-produto">
+                            <button type="button" class="btn btn-info atualizar" data-toggle="modal" data-target="#produto-update"><i class='fas fa-pencil-alt' ></i></button>
+                        </div>
+                        <div class="btn-delete-produto"><button type="button" class="btn btn-danger delete" data-toggle="modal" data-target="#produto-delete"><i class='fas fa-trash' ></i></button></div>
+                    </div>
+                </div>
+
+                <!-- ############ MODAL UPDATE PRODUCT ###################### -->
+                <div class="modal fade" id="produto-update" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"><i class="fas fa-gifts" si aria-hidden="true" style='font-size:30px'></i><i class='fas fa-sync-alt atualizar-icon' style='font-size:12px'></i> - Atualizar Produto</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="POST" action="/produtos?_method=PUT">
+                                    <input id="atualizar-produto-id" type="hidden" name="id" value="<%=produto[0].id%>">
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1"><i class='fas fa-gifts' style='font-size:24px'></i></span>
+                                            </div>
+                                            <input value="<%=produto[0].descricao%>" id="atualizar-produto-desc" type="text" name="descricao" class="form-control atualizar-desc" placeholder="Descrição do Produto" aria-label="Username" aria-describedby="basic-addon1">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1"><i class='fas fa-tags' style='font-size:24px'></i></span>
+                                            </div>
+                                            <select class="form-control" id="atualizar-produto-categoria" name="categoria_id">
+                    <option value="<%=produto[0].categoria_id%>"> <%=produto[0].nome%></option>
+                    <% categorias.forEach(option => {%>
+                            <option value="<%=option.id%>" ><%=option.nome%></option>
+                            <% }); %> 
+                  </select>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Atualizar <i class='fas fa-sync-alt' style='font-size:16px'></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ############ MODAL DELETE PRODUCT ###################### -->
+                <div class="modal fade" id="produto-delete" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"><i class="fas fa-gifts" si aria-hidden="true" style='font-size:30px'></i><i class='fas fa-trash delete-icon' style='font-size:12px'></i> - Deletar Produto</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="POST" action="/produtos?_method=DELETE">
+                                    <input id="delete-produto-id" value="<%=produto[0].id%>" type="hidden" name="id">
+                                    <h4>Tem Certeza que Gotaria de Apagar?</h4>
+                                    <h5><strong>Produto: <%=produto[0].descricao%> </strong><span id="produto-desc-delete"></span></h5>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-danger">Deletar <i class='fas fa-trash' style='font-size:16px'></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%- include('../partial/footer.ejs') %>

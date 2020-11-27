@@ -1,0 +1,573 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+    color: black;
+}
+
+tbody tr:hover {
+    background-color: #7c7c7cad;
+}
+
+.fundo-login {
+    background-image: url('/images/assets/fundo-login.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-login {
+    width: 80%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 9px;
+    box-shadow: 0 0 19px rgba(0, 0, 0, 0.486);
+}
+
+.card-head-login {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+    background: #c9e5ff;
+    background: -moz-linear-gradient(top, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, #c9e5ff), color-stop(98%, #207ce5), color-stop(100%, #207ce5));
+    background: -webkit-linear-gradient(top, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    background: -o-linear-gradient(top, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    background: -ms-linear-gradient(top, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    background: linear-gradient(to bottom, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#c9e5ff', endColorstr='#207ce5', GradientType=0);
+}
+
+.create-acount {
+    width: 100%;
+    text-align: right;
+}
+
+.create-acount button {
+    width: auto;
+    border: none;
+    padding: 0px 3px;
+    font-weight: 500;
+    color: #fff;
+    border-radius: 20px;
+    background-color: #207ce5;
+    box-shadow: 0 0 9px rgba(0, 0, 0, 0.329);
+    margin-top: 10px;
+    margin-right: 8px;
+}
+
+#msg {
+    background-color: none;
+}
+
+.create-acount button a {
+    color: white;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.create-acount button:hover {
+    background-color: #1d6fcc;
+}
+
+.img-login {
+    background-color: #207ce5;
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    border-radius: 150%;
+}
+
+.card-form-login {
+    background-color: white;
+    width: 100%;
+    padding: 0px 25px;
+    border-radius: 0px 0px 9px 9px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-form-login h1 {
+    color: #207ce5;
+}
+
+.card-form-login form {
+    width: 80%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.card-form-login form button {
+    width: 200px;
+    color: #207ce5;
+    font-weight: bold;
+    letter-spacing: 5px;
+    font-size: 18px;
+}
+
+.card-form-login form button:hover {
+    color: #fff;
+}
+
+.card-form-login form input {
+    border: 1px solid #207ce5;
+}
+
+.card-form-login form span {
+    background-color: #207ce5;
+    border: 1px solid #207ce5;
+}
+
+.card-form-login form span i {
+    color: #fff;
+}
+
+
+/* #################### START HOME ############ */
+
+.main {
+    width: 100%;
+    height: 83vh;
+    margin-left: 20px;
+}
+
+.menu-box {
+    position: relative;
+    display: flex;
+}
+
+.menu-lateral {
+    width: 100px;
+    height: 83vh;
+    transform: translateX(0);
+    position: relative;
+    transition: all 0.2s linear;
+    background: #c9e5ff;
+    background: -moz-linear-gradient(top, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, #c9e5ff), color-stop(98%, #207ce5), color-stop(100%, #207ce5));
+    background: -webkit-linear-gradient(top, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    background: -o-linear-gradient(top, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    background: -ms-linear-gradient(top, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    background: linear-gradient(to bottom, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#c9e5ff', endColorstr='#207ce5', GradientType=0);
+    position: absolute;
+}
+
+.fechar {
+    transform: translateX(-100px);
+    transition: all 0.2s linear;
+}
+
+#toogle {
+    border: 2px solid #ffffff;
+    position: fixed;
+    top: 0px;
+    right: -20px;
+    z-index: 10;
+    padding: 5px;
+    height: 100%;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bolder;
+    background: #c9e5ff;
+    background: -moz-linear-gradient(top, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, #c9e5ff), color-stop(98%, #207ce5), color-stop(100%, #207ce5));
+    background: -webkit-linear-gradient(top, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    background: -o-linear-gradient(top, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    background: -ms-linear-gradient(top, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    background: linear-gradient(to bottom, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#c9e5ff', endColorstr='#207ce5', GradientType=0);
+}
+
+#toogle:focus {
+    box-shadow: 0 0 0 0;
+    outline: 0;
+}
+
+#footer {
+    width: 100vw;
+    height: 8vh;
+    background-color: #e5b720;
+    position: absolute;
+}
+
+#menu {
+    z-index: 100;
+}
+
+#menu a {
+    display: block;
+    width: 100%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ffffff;
+    z-index: 20;
+    cursor: pointer;
+    flex-direction: column;
+    color: #fff;
+    font-weight: bolder;
+    font-size: 15px;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.657);
+}
+
+#menu a:hover {
+    background: #c9e5ff;
+    background: -moz-linear-gradient(top, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, #c9e5ff), color-stop(98%, #207ce5), color-stop(100%, #207ce5));
+    background: -webkit-linear-gradient(top, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    background: -o-linear-gradient(top, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    background: -ms-linear-gradient(top, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    background: linear-gradient(to bottom, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#c9e5ff', endColorstr='#207ce5', GradientType=0);
+}
+
+#menu .active {
+    background: #c9e5ff;
+    background: -moz-linear-gradient(top, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, #c9e5ff), color-stop(98%, #207ce5), color-stop(100%, #207ce5));
+    background: -webkit-linear-gradient(top, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    background: -o-linear-gradient(top, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    background: -ms-linear-gradient(top, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    background: linear-gradient(to bottom, #c9e5ff 0%, #207ce5 98%, #207ce5 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#c9e5ff', endColorstr='#207ce5', GradientType=0);
+    color: #e5b720;
+}
+
+#menu .active i {
+    color: #e5b720;
+}
+
+#menu a i {
+    color: #fff;
+    font-size: 45px;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.657);
+}
+
+nav {
+    background-color: #207ce5;
+    box-shadow: 0 0 9px black;
+}
+
+.logo {
+    color: #e5b720;
+    font-weight: bolder;
+    font-size: 25px;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.849);
+}
+
+.logout {
+    background-color: #e5b720;
+    padding: 3px;
+    font-weight: bolder;
+    border-radius: 6px;
+    color: #207ce5;
+    box-shadow: 0 0 9px rgba(0, 0, 0, 0.548);
+    cursor: pointer;
+}
+
+.main iframe {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* .close {
+    transform: translateX(0);
+    transition: all 2s linear;
+} */
+
+
+/* ##################### END HOME ############# */
+
+
+/* ##################### SATART PRODUTOS ############# */
+
+.container {
+    margin-left: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container h1 {
+    width: 92%;
+    color: #207ce5;
+    border-bottom: 2px solid #207ce5;
+    margin-bottom: 25px;
+}
+
+.container h1 i {
+    color: #207ce5;
+}
+
+.busca-produtos {
+    width: 92%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.tabela-teste {
+    width: 92%;
+    position: relative;
+    overflow: auto;
+}
+
+#table-produto {
+    width: 100%;
+    height: 59vh;
+    display: block;
+}
+
+#table-produto thead {
+    background-color: #e5b720;
+}
+
+#table-produto thead tr {
+    color: #207ce5;
+    width: 90vw;
+}
+
+
+/* .col-id {
+    width: 15%;
+    text-align: center;
+}
+
+.col-desc {
+    width: 50%;
+    text-align: center;
+}
+
+.col-cat {
+    width: 50%;
+    text-align: center;
+} */
+
+#table-produto tbody {
+    width: 100%;
+    overflow: hidden;
+    height: 200px;
+}
+
+
+/* #table-produto th,
+td {
+    text-align: left;
+    padding: 8px;
+    width: 45%;
+} */
+
+.col-id {
+    width: 5%;
+    text-align: left;
+    padding: 8px;
+}
+
+.col-desc {
+    text-align: center;
+    padding: 8px;
+    width: 60%;
+}
+
+.col-cat {
+    text-align: center;
+    padding: 8px;
+    width: 60%;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+
+.busca-produtos .input-group {
+    width: 45%;
+}
+
+.busca-produtos input {
+    border: 1px solid #207ce5;
+}
+
+.busca-produtos span i {
+    color: #fff;
+}
+
+.busca-produtos span {
+    background-color: #207ce5;
+    border: 1px solid #207ce5;
+}
+
+.btn-acao {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+.btn-edit-produto {
+    margin-right: 10px;
+}
+
+@media( max-width:600px) {
+    .busca-produtos .input-group {
+        width: 80%;
+    }
+    .container {
+        margin: 0 auto;
+    }
+}
+
+.modal-header {
+    background-color: #207ce5;
+}
+
+.modal-header h5,
+h5 i {
+    color: #fff;
+}
+
+.input-group span {
+    background-color: #207ce5;
+    border: 1px solid #207ce5;
+}
+
+.input-group span i {
+    color: #fff;
+}
+
+.input-group input,
+.form-control {
+    border: 1px solid #207ce5;
+}
+
+.modal-title {
+    position: relative;
+}
+
+.modal-title i.fa-plus,
+.atualizar-icon,
+.delete-icon {
+    padding: 2px;
+    background-color: #fff;
+    color: #207ce5;
+    border-radius: 50%;
+    border: 1px solid #207ce5;
+    position: absolute;
+    top: 20px;
+    left: 28px;
+}
+
+.card-produto {
+    width: 90%;
+    padding: 20px;
+    border-bottom: 22px solid #207ce5;
+    border-radius: 9px;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.315);
+    margin-bottom: 20px;
+}
+
+.info-produto {
+    border: 2px solid #e5b720;
+    padding: 10px;
+    border-radius: 9px;
+    margin-bottom: 30px;
+}
+
+.info-produto h4 {
+    color: #207ce5;
+    padding: 10px;
+}
+
+
+/* ##################### END PRODUTOS ############# */
+
+
+/* ##################### START COMPRAS ############# */
+
+.lista-compra {
+    width: 92%;
+    height: 70vh;
+    display: block;
+    overflow-y: scroll;
+}
+
+.linha-compra {
+    display: flex;
+    justify-content: space-between;
+    padding: 2px;
+}
+
+.linha-compra div {
+    margin: 0px 3px;
+}
+
+.btn-add-lista {
+    display: flex;
+    margin-bottom: 20px;
+    width: 92%;
+    justify-content: start;
+}
+
+.lista-compra-row {
+    display: block;
+    width: max-content;
+}
+
+.div-forms {
+    width: 50%;
+}
+
+.lista-compra-row form {
+    display: flex;
+    justify-content: safe;
+    align-items: flex-end;
+}
+
+.lista-compra-row form input {
+    width: 100px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.form-data {
+    width: 30%;
+    margin-left: 30px;
+}
+
+.lista-itens {
+    display: block;
+    width: 92%;
+    height: 70vh;
+    position: relative;
+    overflow: auto;
+}
+
+.iten-sale {
+    background-color: #79e5205e;
+}

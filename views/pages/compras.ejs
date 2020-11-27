@@ -1,0 +1,153 @@
+<%- include('../partial/head.ejs') %>
+    <%- include('../partial/nav.ejs') %>
+        <%- include('../partial/aside.ejs') %>
+            <div class="container">
+                <h1><i class="fas fa-shopping-cart" aria-hidden="true"></i> Compras</h1>
+                <div class="btn-add-lista"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-lista" id="btn-lista"><i class='fas fa-cart-plus' style='font-size:24px'></i></button></div>
+                <div class="tabela-teste">
+                    <table id="table-produto">
+                        <thead>
+                            <tr>
+                                <th class="col-id" scope="col"><i class='far fa-calendar-alt' style='font-size:24px'></i> Data</th>
+                                <th class="col-desc" scope="col"><i class='fas fa-cart-arrow-down' style='font-size:24px'></i> Itens</th>
+                                <th class="col-cat" scope="col"> <i class='fas fa-money-bill-wave' style='font-size:18px'></i> Valor</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="lista" class="">
+                            <% listas.forEach(lista =>{%>
+                                <tr>
+                                    <th class="id col-id" scope="row">
+                                        <a href="compras/<%=lista.id%>">
+                                            <%=moment(lista.data ).format('D/M/Y')%>
+                                        </a>
+                                    </th>
+                                    <td class="desc col-desc" scope="row">
+                                        <a href="compras/<%=lista.id%>">
+                                            <%=lista.itens%>
+                                        </a>
+                                    </td>
+                                    <td class="nome col-cat">
+                                        <a href="compras/<%=lista.id%>">
+                                          R$  <%=lista.valor.toFixed(2)%>
+                                        </a>
+                                    </td>
+
+                                </tr>
+                                <%   }) %>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- MODAL -->
+                <div class="modal fade" id="modal-lista" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel"><i class='fas fa-cart-plus' style='font-size:24px'></i> Crie sua Lista</h5> <input class="form-control form-data" type="date" name="" value="<%=//moment(new Date()).format('Y-M-D')%>" id="data">
+                                <button type="button" class="close" id="fechar" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                            </div>
+                            <div class="modal-body">
+
+                                <ul class="list-group list-group-flush">
+                                    <% produtos.map(p =>{%>
+                                        <li class="list-group-item lista-compra-row">
+                                            <div>
+                                                <div>
+                                                    <span class="badge badge-primary"><%=p.nome%></span>
+
+                                                </div>
+                                                <div>
+                                                    <h5>
+                                                        <%=p.descricao%>
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                            <div class="div-forms">
+                                                <form class="form-lista-compra" action="">
+                                                    <div>
+                                                        <div>
+                                                            <span class="badge badge-primary">Quantidade</span>
+                                                        </div>
+                                                        <input class="form-control qtd" type="number" name="" id="">
+                                                        <input class="form-control id-produto" type="hidden" name="" id="" value="<%= p.id %> ">
+                                                    </div>
+                                                    <div><button type="button" class="btn btn-success add-list"><i class='fas fa-cart-arrow-down'></i></button></div>
+                                                </form>
+                                            </div>
+                                        </li>
+                                        <% }) %>
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Understood</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    const data = document.getElementById('data')
+                    const btnAdd = document.getElementsByClassName('add-list')
+                    const qtd = document.getElementsByClassName('qtd')
+                    const idProduto = document.getElementsByClassName('id-produto')
+                    const btnLista = document.getElementById('btn-lista')
+                    const fechar = document.getElementById('fechar')
+                    data.addEventListener('change', async e => {
+                        const lista = {
+                            data: data.value,
+                            usuario_id: '<%=usuarioLogado.id%>'
+                        }
+                        if (data.value != '') {
+                            data.style.border = '1px solid black'
+                            const respostaLista = await fetch(`<%=link.url%>/listas`, {
+                                method: "POST",
+                                body: JSON.stringify(lista),
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json',
+                                    'Authorization': 'Bearer ' + '<%=link.token%>'
+                                }
+                            })
+                            const idLista = await respostaLista.json()
+
+                            for (let index = 0; index < btnAdd.length; index++) {
+                                const [id_lista] = idLista
+                                if (data.value != '') {
+                                    btnAdd[index].addEventListener('click', async e => {
+                                        const iten = {
+                                            lista_id: id_lista,
+                                            produto_id: idProduto[index].value,
+                                            quantidade: qtd[index].value,
+                                            valor: 0,
+                                            status: 0
+
+                                        }
+
+                                        const respostaItens = await fetch(`<%=link.url%>/listas-produtos`, {
+                                            method: "POST",
+                                            body: JSON.stringify(iten),
+                                            headers: {
+                                                'Accept': 'application/json',
+                                                'Content-Type': 'application/json',
+                                                'Authorization': 'Bearer ' + '<%=link.token%>'
+                                            }
+                                        })
+                                        const idItens = await respostaItens.json()
+                                        alert('Produto inserido com sucesso!')
+
+                                    })
+
+                                }
+                            }
+                        }
+                    })
+
+
+                    fechar.addEventListener('click', e => {
+                        window.location.reload()
+                    })
+                </script>
+                <%- include('../partial/footer.ejs') %>
