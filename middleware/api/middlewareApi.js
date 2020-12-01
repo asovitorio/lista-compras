@@ -16,7 +16,7 @@ const authApi = {
             } catch (error) {
                 return res.status(401).json({
                     err: "Token invalido!"
-                });
+                });dedeh
             }
         } else {
             return res.status(401).json({

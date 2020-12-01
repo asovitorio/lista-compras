@@ -2,7 +2,10 @@
     <%- include('../partial/nav.ejs') %>
         <%- include('../partial/aside.ejs') %>
             <div class="container">
-                <h1><i class="fas fa-cart-arrow-down" aria-hidden="true"></i> Itens</h1>
+                <h1><i class="fas fa-cart-arrow-down" aria-hidden="true"></i> Lista de Compras -
+                    <%= moment(listas[0].data).format('D/M/Y')  %>
+                </h1>
+                <div class="btn-add-lista"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-lista" id="btn-lista"><i class='fas fa-cart-plus' style='font-size:24px'></i></button></div>
                 <ul class="list-group list-group-flush lista-itens ">
                     <% listas   .map(p =>{%>
                         <li class="list-group-item lista-compra-row">
@@ -46,6 +49,56 @@
                         </li>
                         <% }) %>
                 </ul>
+                <!-- MODAL -->
+                <div class="modal fade" id="modal-lista" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel"><i class='fas fa-cart-plus' style='font-size:24px'></i> Adicione Produto</h5>
+                                <button type="button" class="close" id="fechar" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+                            </div>
+                            <div class="modal-body">
+
+                                <ul class="list-group list-group-flush">
+                                    <% produtos.map(p =>{%>
+                                        <li class="list-group-item lista-compra-row">
+                                            <div>
+                                                <div>
+                                                    <span class="badge badge-primary"><%=p.nome%></span>
+
+                                                </div>
+                                                <div>
+                                                    <h5>
+                                                        <%=p.descricao%>
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                            <div class="div-forms">
+                                                <form class="form-lista-compra" action="">
+                                                    <div>
+                                                        <div>
+                                                            <span class="badge badge-primary">Quantidade</span>
+                                                        </div>
+                                                        <input class="form-control qtd-modal" type="number" name="" id="">
+                                                        <input class="form-control id-produto-modal" type="hidden" name="" id="" value="<%= p.id %> ">
+                                                        <input class="form-control id-lista-modal" type="hidden" name="" id="" value="<%= p.lista_id %> ">
+                                                    </div>
+                                                    <div><button type="button" class="btn btn-success add-list-modal"><i class='fas fa-cart-arrow-down'></i></button>
+                                                        <i class='fas fa-check btn-ok' style="font-size: 24px;"></i>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </li>
+                                        <% }) %>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
                 <script>
                     // fas fa-times-circle
                     const total = document.getElementsByClassName('input-valor')
@@ -57,9 +110,7 @@
                     const icon = document.getElementsByClassName('icon-bnt')
                     for (let index = 0; index < valorUn.length; index++) {
                         valorUn[index].addEventListener('change', e => {
-
                             total[index].value = Number(quantidade[index].value * valorUn[index].value).toFixed(2)
-
                             console.log(status[index].value)
                         })
                         quantidade[index].addEventListener('change', e => {
@@ -91,11 +142,58 @@
                             })
 
                         }
-
-
-
+                        // ###### Logica Modal #######
 
 
                     }
+                    const btnAddProduto = document.getElementsByClassName('add-list-modal')
+                    const idProduto = document.getElementsByClassName('id-produto-modal')
+                    const idLista = document.getElementsByClassName('id-lista-modal')
+                    const qtdProduto = document.getElementsByClassName('qtd-modal')
+                    const ok = document.getElementsByClassName('btn-ok')
+                    const fechar = document.getElementById('fechar')
+                    for (let index = 0; index < btnAddProduto.length; index++) {
+                        ok[index].style.display = 'none'
+                        btnAddProduto[index].addEventListener('click', async e => {
+                            const itenListaProduto = {
+                                lista_id: '<%=listas[0].lista_id%>',
+                                produto_id: idProduto[index].value,
+                                quantidade: qtdProduto[index].value,
+                                valor_un: 0,
+                                valor: 0,
+                                status: 0
+                            }
+
+                            if (qtdProduto[index].value != 0) {
+                                const respostaItens = await fetch(`<%=link.url%>/listas-produtos`, {
+                                    method: "POST",
+                                    body: JSON.stringify(itenListaProduto),
+                                    headers: {
+                                        'Accept': 'application/json',
+                                        'Content-Type': 'application/json',
+                                        'Authorization': 'Bearer ' + '<%=link.token%>'
+                                    }
+                                })
+                                ok[index].style.display = 'inline'
+                                ok[index].style.color = '#28a745'
+                                btnAddProduto[index].style.display = 'none'
+                                qtdProduto[index].disabled = 'true'
+                                qtdProduto[index].style.border = '1px solid #207ce5'
+
+                                // const idItens = await respostaItens.json()
+                                alert(qtdProduto[index].value != '' ? true : false)
+                            } else {
+                                qtdProduto[index].style.border = '2px solid red'
+
+                            }
+
+
+
+                        })
+
+                    }
+                    fechar.addEventListener('click', e => {
+                        window.location.reload()
+                    })
                 </script>
                 <%- include('../partial/footer.ejs') %>

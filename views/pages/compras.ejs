@@ -44,7 +44,7 @@
                     <div class="modal-dialog modal-dialog-scrollable modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel"><i class='fas fa-cart-plus' style='font-size:24px'></i> Crie sua Lista</h5> <input class="form-control form-data" type="date" name="" value="<%=//moment(new Date()).format('Y-M-D')%>" id="data">
+                                <h5 class="modal-title" id="staticBackdropLabel"><i class='fas fa-cart-plus' style='font-size:24px'></i> Crie sua Lista</h5> <input class="form-control form-data" type="date" name="" value="<%=//   moment(new Date()).format('Y-M-D')%>" id="data">
                                 <button type="button" class="close" id="fechar" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
@@ -74,17 +74,16 @@
                                                         <input class="form-control qtd" type="number" name="" id="">
                                                         <input class="form-control id-produto" type="hidden" name="" id="" value="<%= p.id %> ">
                                                     </div>
-                                                    <div><button type="button" class="btn btn-success add-list"><i class='fas fa-cart-arrow-down'></i></button></div>
+                                                    <div><button type="button" class="btn btn-success add-list"><i class='fas fa-cart-arrow-down'></i></button>
+                                                        <i class='fas fa-check btn-icon-ok' style="font-size: 24px;"></i>
+                                                    </div>
                                                 </form>
                                             </div>
                                         </li>
                                         <% }) %>
                                 </ul>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Understood</button>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -95,12 +94,32 @@
                     const idProduto = document.getElementsByClassName('id-produto')
                     const btnLista = document.getElementById('btn-lista')
                     const fechar = document.getElementById('fechar')
+                    const iconOk = document.getElementsByClassName('btn-icon-ok')
+                    const d = []
+                    '<%for (let index = 0; index < listas.length; index++) {%>'
+                    d.push('<%= moment(listas[index].data).format("Y-M-D")%>')
+                    '<%};%>'
+
+                    btnLista.addEventListener('click', e => {
+                        if (data.value == '') {
+                            alert('Digite uma data')
+                            data.focus()
+                            data.style.border = '2px solid orange'
+                        }
+                    })
+                    for (let index = 0; index < iconOk.length; index++) {
+                        iconOk[index].style.display = 'none'
+
+                    }
+
                     data.addEventListener('change', async e => {
+                        data.style.border = 'none'
                         const lista = {
                             data: data.value,
                             usuario_id: '<%=usuarioLogado.id%>'
                         }
-                        if (data.value != '') {
+                        console.log()
+                        if (data.value != '' && !d.includes(data.value)) {
                             data.style.border = '1px solid black'
                             const respostaLista = await fetch(`<%=link.url%>/listas`, {
                                 method: "POST",
@@ -116,6 +135,7 @@
                             for (let index = 0; index < btnAdd.length; index++) {
                                 const [id_lista] = idLista
                                 if (data.value != '') {
+
                                     btnAdd[index].addEventListener('click', async e => {
                                         const iten = {
                                             lista_id: id_lista,
@@ -126,25 +146,45 @@
 
                                         }
 
-                                        const respostaItens = await fetch(`<%=link.url%>/listas-produtos`, {
-                                            method: "POST",
-                                            body: JSON.stringify(iten),
-                                            headers: {
-                                                'Accept': 'application/json',
-                                                'Content-Type': 'application/json',
-                                                'Authorization': 'Bearer ' + '<%=link.token%>'
-                                            }
-                                        })
-                                        const idItens = await respostaItens.json()
-                                        alert('Produto inserido com sucesso!')
+
+                                        if (qtd[index].value != 0) {
+                                            const respostaItens = await fetch(`<%=link.url%>/listas-produtos`, {
+                                                method: "POST",
+                                                body: JSON.stringify(iten),
+                                                headers: {
+                                                    'Accept': 'application/json',
+                                                    'Content-Type': 'application/json',
+                                                    'Authorization': 'Bearer ' + '<%=link.token%>'
+                                                }
+                                            })
+                                            const idItens = await respostaItens.json()
+                                            iconOk[index].style.display = 'inline'
+                                            iconOk[index].style.color = '#28a745'
+                                            btnAdd[index].style.display = 'none'
+                                            qtd[index].disabled = 'true'
+                                            qtd[index].style.border = '1px solid #207ce5'
+                                            iconOk[index].style.display = 'inline'
+
+                                        } else {
+                                            qtd[index].style.border = '2px solid red'
+                                            alert('insira um produto')
+
+                                        }
+
 
                                     })
 
                                 }
                             }
+                        } else {
+                            alert('data ja existe')
+                            e.preventDefault()
+                            data.value = ''
+                            data.style.border = '2px solid red'
                         }
-                    })
 
+
+                    })
 
                     fechar.addEventListener('click', e => {
                         window.location.reload()

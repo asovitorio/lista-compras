@@ -536,7 +536,7 @@ h5 i {
 
 .lista-compra-row {
     display: block;
-    width: max-content;
+    width: 92vw;
 }
 
 .div-forms {
@@ -563,7 +563,7 @@ h5 i {
 .lista-itens {
     display: block;
     width: 92%;
-    height: 70vh;
+    height: 60vh;
     position: relative;
     overflow: auto;
 }
